@@ -6,11 +6,7 @@ import {
     getDefaultWallets,
     getDefaultConfig,
 } from '@rainbow-me/rainbowkit';
-import {
-    argentWallet,
-    trustWallet,
-    ledgerWallet,
-} from '@rainbow-me/rainbowkit/wallets';
+
 import {
     mainnet,
     sepolia,
@@ -26,13 +22,7 @@ const { wallets } = getDefaultWallets();
 const config = getDefaultConfig({
     appName: 'NFT Marketplace',
     projectId: 'YOUR_PROJECT_ID', // Replaced with env or dummy
-    wallets: [
-        ...wallets,
-        {
-            groupName: 'Other',
-            wallets: [argentWallet, trustWallet, ledgerWallet],
-        },
-    ],
+
     chains: [
         localhost, // Prioritize Localhost for dev
         sepolia,
