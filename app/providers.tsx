@@ -11,18 +11,21 @@ import {
     sepolia,
 } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
+import { WagmiProvider, type Config } from 'wagmi';
 import '@rainbow-me/rainbowkit/styles.css';
 
-const config = getDefaultConfig({
-    appName: 'NFT Marketplace',
-    projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'demo-project-id',
-    chains: [sepolia, mainnet],
-    ssr: true,
-});
+function createConfig(): Config {
+    return getDefaultConfig({
+        appName: 'NFT Marketplace',
+        projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
+        chains: [sepolia, mainnet],
+        ssr: true,
+    });
+}
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const [queryClient] = React.useState(() => new QueryClient());
+    const [config] = React.useState<Config>(() => createConfig());
     const [mounted, setMounted] = React.useState(false);
 
     React.useEffect(() => {
