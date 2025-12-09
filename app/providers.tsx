@@ -21,13 +21,11 @@ const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
     appName: 'NFT Marketplace',
-    projectId: 'YOUR_PROJECT_ID', // Replaced with env or dummy
-
+    projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'demo-project-id',
     chains: [
-        localhost, // Prioritize Localhost for dev
         sepolia,
         mainnet,
-        ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [hardhat] : []),
+        ...(process.env.NODE_ENV === 'development' ? [localhost, hardhat] : []),
     ],
     ssr: true,
 });
