@@ -4,14 +4,13 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  // Turbopack 비활성화하고 webpack 사용
-  turbopack: {},
-  webpack: (config) => {
-    config.externals.push('pino-pretty', 'lokijs', 'encoding');
-    return config;
+  // Next.js 16: turbopack 설정으로 webpack externals 처리
+  turbopack: {
+    resolveAlias: {
+      'pino-pretty': false,
+      'lokijs': false,
+      'encoding': false,
+    },
   },
 };
 
