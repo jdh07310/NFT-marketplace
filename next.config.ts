@@ -4,14 +4,8 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Next.js 16: turbopack 설정으로 webpack externals 처리
-  turbopack: {
-    resolveAlias: {
-      'pino-pretty': false,
-      'lokijs': false,
-      'encoding': false,
-    },
-  },
+  // Next.js 16: Turbopack 빈 설정 (webpack 없이)
+  turbopack: {},
 };
 
 export default nextConfig;
