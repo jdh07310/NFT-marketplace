@@ -3,41 +3,37 @@
 import * as React from 'react';
 import {
     RainbowKitProvider,
-    getDefaultWallets,
     getDefaultConfig,
 } from '@rainbow-me/rainbowkit';
 
 import {
     mainnet,
     sepolia,
-    hardhat,
-    localhost,
 } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import '@rainbow-me/rainbowkit/styles.css';
 
-const { wallets } = getDefaultWallets();
-
 const config = getDefaultConfig({
     appName: 'NFT Marketplace',
     projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'demo-project-id',
-    chains: [
-        sepolia,
-        mainnet,
-        ...(process.env.NODE_ENV === 'development' ? [localhost, hardhat] : []),
-    ],
+    chains: [sepolia, mainnet],
     ssr: true,
 });
 
-const queryClient = new QueryClient();
-
 export function Providers({ children }: { children: React.ReactNode }) {
+    const [queryClient] = React.useState(() => new QueryClient());
+    const [mounted, setMounted] = React.useState(false);
+
+    React.useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
         <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
                 <RainbowKitProvider>
-                    {children}
+                    {mounted ? children : null}
                 </RainbowKitProvider>
             </QueryClientProvider>
         </WagmiProvider>
